@@ -65,7 +65,7 @@ module.exports = {
      */
     htmlPlugins(entrys = {}) {
         let _Ahtmls = [];
-        var files = glob.sync(path.resolve(__dirname, "../src/html/**/*.html"));
+        var files = glob.sync(path.resolve(__dirname, "../../src/html/**/*.html"));
         for (let k in entrys) {
             files.map(h => {
                 let _Aname = h.split("/"),
@@ -79,7 +79,7 @@ module.exports = {
                             template: h,
                             favicon: path.resolve(
                                 __dirname,
-                                "../static/favicon.ico"
+                                "../../static/favicon.ico"
                             ),
                             meta: {
                                 viewport:

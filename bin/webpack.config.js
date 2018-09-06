@@ -9,7 +9,23 @@ const htmls = Utils.htmlPlugins(entrys);
 console.log('entrys',entrys)
 const _env = process.env.NODE_ENV;
 const HtmlWebpackPluginExc = Utils.HtmlWebpackPluginExc;
-const _config = require("./config/index");
+const _config = require("./config");
+
+console.log(path.normalize("../src//js/index.js"))
+console.log(path.join(dirname, "../src/js/index.js",'../'))
+console.log(path.resolve(dirname, "../src/js/index.js"))
+console.log(path.isAbsolute("/songpeilan/Documents/github/rhinocerosTeam/src/js/index.js"))
+console.log(path.relative(dirname, "../src/js/index.js"))
+console.log(path.extname("../src/js/index.js"))
+console.log(path.parse("../src/js/index.js"))
+console.log(path.format({ root: '',
+    dir: '../src/js',
+    base: 'index.js',
+    ext: '.js',
+    name: 'index' }))
+
+
+
 module.exports = {
     entry: entrys,
     output: {
@@ -26,9 +42,9 @@ module.exports = {
     },
     plugins:[
         ...htmls,
-        new HtmlWebpackPluginExc({
-            jsPath: _config[_env]["jsPath"]
-        })
+        // new HtmlWebpackPluginExc({
+        //     jsPath: _config['development']["jsPath"]
+        // })
     ],
     devServer: {
         contentBase: path.join(dirname, "dist"), //静态文件根目录
