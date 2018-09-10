@@ -3,11 +3,22 @@
     "build": "webpack --config bin/webpack.config.js --mode development",
     "dev": "webpack-dev-server --open --mode development"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "*.vue",
+    "*.less"
+  ],
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "glob": "^7.1.3",
+    "happypack": "^5.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.2",
+    "optimization": "^0.0.1",
     "path": "^0.12.7",
+    "vue": "^2.5.17",
+    "vue-loader": "^15.4.1",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7"

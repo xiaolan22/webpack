@@ -74,7 +74,7 @@ module.exports = {
                     // if(_name.split('.')[0] == k.split('/')[1]){
                     _Ahtmls.push(
                         new htmlWebpackPlugin({
-                            // title: "盒饭LIVE-直击娱乐 偶像工厂",
+                            title: "盒饭LIVE-直击娱乐 偶像工厂",
                             filename: `${k}.html`,
                             template: h,
                             favicon: path.resolve(
