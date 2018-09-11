@@ -24,6 +24,7 @@
     "optimization": "^0.0.1",
     "os": "^0.1.1",
     "path": "^0.12.7",
+    "url-loader": "^1.1.1",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.1",
     "webpack": "^4.17.1",

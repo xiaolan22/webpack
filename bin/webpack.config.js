@@ -13,11 +13,9 @@ const _config = require("./config");
 const HelloWorldPlugin = require("./plugin/HelloWorld");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const _includeDir = /(src|hefantv_share)/;
-
-const HappyPack = require("happypack");
 const os = require("os");
+const HappyPack = require("happypack");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-
 module.exports = {
     entry: entrys,
     output: {
@@ -77,6 +75,51 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 include: _includeDir,
                 use: "happypack/loader?id=happy-babel-html"
+            },
+            {
+                test: /\.(png|svg|jpg|gif|jpeg|cur)/,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            // limit: 1,
+                            context: path.join(__dirname, "../dist"),
+                            limit: 8192,
+                            name: function(str) {
+                                let url = "",
+                                    index = 0,
+                                    urlPath = "";
+                                str = str.split(path.sep).join("/");
+
+                                // if (!str.includes("sprites")) {
+                                    url = str.match(/src\/(\S*)/);
+                                    if (url) {
+                                        // 正常图片名字位置处理方式
+                                        index = url[1].lastIndexOf("/");
+                                        url = url[1].slice(0, index);
+                                        return url + "/[name]-[hash:5].[ext]";
+                                    } else {
+                                        return "assets/img/common/[name]-[hash:5].[ext]";
+                                    }
+                                // } else {
+                                //     // 需要转化成雪碧图名字位置处理方式
+                                //     let sprites = "";
+                                //     url = str.match(/sprites\/(\S*)/);
+                                //     index = url[1].lastIndexOf(".");
+                                //     sprites = url[1].slice(
+                                //         url[1].indexOf(".") + 1,
+                                //         index
+                                //     );
+                                //     url[0] = url[0].replace("sprites", sprites);
+                                //     url = url[0].replace(url[1], "");
+                                //     url = "assets/img/" + url;
+                                //     return url + "[name]-[hash:5].[ext]";
+                                // }
+                            }
+                            // publicPath: "/"
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -92,7 +135,7 @@ module.exports = {
     },
     plugins: [
         ...htmls,
-
+        
         /* 清空*/
         new CleanWebpackPlugin([path.join(dirname, "dist")]),
         //new HelloWorldPlugin()
