@@ -14,6 +14,9 @@ const HelloWorldPlugin = require("./plugin/HelloWorld");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const _includeDir = /(src|hefantv_share)/;
 
+const HappyPack = require("happypack");
+const os = require("os");
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
     entry: entrys,
@@ -91,11 +94,31 @@ module.exports = {
         ...htmls,
 
         /* 清空*/
-        new CleanWebpackPlugin([path.join(dirname, "dist")])
+        new CleanWebpackPlugin([path.join(dirname, "dist")]),
         //new HelloWorldPlugin()
         // new HtmlWebpackPluginExc({
         //     jsPath: _config['development']["jsPath"]
         // })
+        /**
+         * @description 开启一个进程去处理 babel-loader 转换es6语法
+         * @date 2018-07-31
+         */
+        new HappyPack({
+            //用id来标识 happypack处理那里类文件
+            id: "happy-babel-html",
+            //如何处理  用法和loader 的配置一样
+            loaders: ["html-loader"],
+            //共享进程池
+            threadPool: happyThreadPool,
+            //允许 HappyPack 输出日志
+            verbose: true
+        }),
+        new HappyPack({
+            id: "happy-babel-js",
+            loaders: ["babel-loader?cacheDirectory=true"],
+            threadPool: happyThreadPool,
+            verbose: true
+        }),
     ],
     devServer: {
         contentBase: path.join(dirname, "dist"), //静态文件根目录
